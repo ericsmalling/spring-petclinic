@@ -18,7 +18,7 @@ pipeline {
             steps {
                 echo 'Testing...'
                 snykSecurity(
-                        snykInstallation: 'YKMSmalls App Team',
+                        snykInstallation: 'Snyk Scanner',
                         snykTokenId: 'YKMSmalls-App',
                 )
             }
