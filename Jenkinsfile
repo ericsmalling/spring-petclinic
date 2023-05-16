@@ -31,7 +31,7 @@ pipeline {
         stage('Package') {
             agent { docker { image 'maven:3.9.1-eclipse-temurin-17' } }
             steps {
-                sh 'mvn package -DskipTests\''
+                sh 'mvn package -DskipTests'
             }
         }
     }
