@@ -4,13 +4,13 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh 'mvn clean package -DskipTests'
+                sh 'mvn clean compile -DskipTests'
             }
         }
 
         stage('Test') {
             steps {
-                sh 'mvn surefire:report'
+                sh 'mvn test'
             }
         }
 
@@ -22,6 +22,17 @@ pipeline {
                         snykTokenId: 'YKMSmalls-App',
                 )
             }
+        }
+
+        stage('Package') {
+            steps {
+                sh 'mvn package -DskipTests\''
+            }
+        }
+    }
+    post {
+        always {
+            junit(testResults: 'target/surefire-reports/*.xml', allowEmptyResults : true)
         }
     }
 }
