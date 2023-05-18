@@ -5,7 +5,7 @@ pipeline {
         stage('Build') {
             agent { docker { image 'maven:3.9.1-eclipse-temurin-17' } }
             steps {
-                sh 'mvn clean compile -DskipTests'
+                sh 'mvn clean package -DskipTests'
             }
         }
 
@@ -25,13 +25,6 @@ pipeline {
                         snykTokenId: 'YKMSmalls-App',
                         failOnIssues: false
                 )
-            }
-        }
-
-        stage('Package') {
-            agent { docker { image 'maven:3.9.1-eclipse-temurin-17' } }
-            steps {
-                sh 'mvn package -DskipTests'
             }
         }
     }
