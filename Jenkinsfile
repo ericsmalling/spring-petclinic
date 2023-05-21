@@ -1,18 +1,30 @@
 pipeline {
-    agent none
+    agent{
+        label 'docker'
+    }
 
     stages {
         stage('Build') {
-            agent { docker { image 'maven:3.9.1-eclipse-temurin-17' } }
+            agent {
+                docker {
+                    reuseNode true
+                    image 'maven:3.9.1-eclipse-temurin-17'
+                }
+            }
             steps {
                 sh 'mvn clean package -DskipTests'
             }
         }
-
-        stage('Test') {
-            agent { docker { image 'maven:3.9.1-eclipse-temurin-17' } }
-            steps {
-                sh 'mvn test'
+        stages {
+            stage('Test') {
+                steps {
+                    sh 'mvn test'
+                }
+            }
+            post {
+                always {
+                    junit(testResults: 'target/surefire-reports/*.xml', allowEmptyResults : true)
+                }
             }
         }
 
@@ -26,12 +38,6 @@ pipeline {
                         failOnIssues: false
                 )
             }
-        }
-    }
-    post {
-        always {
-            agent { docker { image 'maven:3.9.1-eclipse-temurin-17' } }
-            junit(testResults: 'target/surefire-reports/*.xml', allowEmptyResults : true)
         }
     }
 }
