@@ -4,12 +4,16 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh 'mvn clean package -DskipTests'
+                withMaven {
+                    sh 'mvn clean package -DskipTests'
+                }
             }
         }
         stage('Test') {
             steps {
-                sh 'mvn test'
+                withMaven {
+                    sh 'mvn test'
+                }
             }
         }
         stage('Snyk Scan') {
