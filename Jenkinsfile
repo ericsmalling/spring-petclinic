@@ -4,18 +4,20 @@ pipeline {
     }
 
     stages {
-        stage('Build') {
+        stage('Dockerized Maven') {
             agent {
                 docker {
                     reuseNode true
                     image 'maven:3.9.1-eclipse-temurin-17'
                 }
             }
-            steps {
-                sh 'mvn clean package -DskipTests'
-            }
         }
         stages {
+            stage('Build') {
+                steps {
+                    sh 'mvn clean package -DskipTests'
+                }
+            }
             stage('Test') {
                 steps {
                     sh 'mvn test'
