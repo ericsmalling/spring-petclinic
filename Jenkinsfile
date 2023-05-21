@@ -29,6 +29,7 @@ pipeline {
         }
     }
     post {
+        agent { docker { image 'maven:3.9.1-eclipse-temurin-17' } }
         always {
             junit(testResults: 'target/surefire-reports/*.xml', allowEmptyResults : true)
         }
