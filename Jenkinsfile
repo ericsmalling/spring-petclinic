@@ -27,6 +27,16 @@ pipeline {
                 )
             }
         }
+        stage('Deploy artifcats') {
+            steps {
+                echo 'This is where we would send artifacts to repo server'
+            }
+        }
+        stage('Deploy to Dev') {
+            steps {
+                echo 'This is where we would deploy to dev'
+            }
+        }
     }
     post {
         always {
