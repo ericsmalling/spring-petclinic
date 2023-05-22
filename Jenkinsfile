@@ -23,7 +23,6 @@ pipeline {
                         snykInstallation: 'Snyk Scanner',
                         snykTokenId: 'YKMSmalls-App',
                         failOnIssues: false,
-                        monitorProjectOnBuild: false
                 )
             }
         }
