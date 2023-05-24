@@ -20,9 +20,14 @@ pipeline {
             }
         }
         stage('Snyk Scan') {
+            agent {
+                docker {
+                    image 'snyk/snyk:linux'
+                    args '-v /var/run/docker.sock:/var/run/docker.sock'
+                }
+            }
             steps {
                 echo 'Testing...'
-                docker.image('snyk/snyk:linux').inside("--env SNYK_TOKEN=${env.SNYK_TOKEN}") {
                     sh 'snyk test --fail-on-issues=false'
                 }
             }
