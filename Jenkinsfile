@@ -28,10 +28,10 @@ pipeline {
             }
             steps {
                 echo 'Testing...'
-                    sh 'snyk test --fail-on-issues=false'
-                }
+                sh 'snyk test --fail-on-issues=false'
             }
         }
+
         stage('Deploy artifcats') {
             steps {
                 echo 'This is where we would send artifacts to repo server'
