@@ -22,13 +22,13 @@ pipeline {
         stage('Snyk Scan') {
             agent {
                 docker {
-                    image 'snyk/snyk:maven'
+                    image 'snyk/snyk:linux'
                     args '-e SNYK_TOKEN'
                 }
             }
             steps {
                 echo 'Testing...'
-                sh 'snyk test --fail-on-issues=false'
+                sh 'test --fail-on-issues=false'
             }
         }
         stage('Deploy artifcats') {
