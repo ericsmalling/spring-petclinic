@@ -22,7 +22,7 @@ pipeline {
         stage('Snyk Scan') {
             steps {
                 echo 'Testing...'
-                docker.image('snyk/snyk:linux').inside("-e SNYK_TOKEN=${env.SNYK_TOKEN}") {
+                docker.image('snyk/snyk:linux').inside("--env SNYK_TOKEN=${env.SNYK_TOKEN}") {
                     sh 'snyk test --fail-on-issues=false'
                 }
             }
