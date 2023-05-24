@@ -24,11 +24,11 @@ pipeline {
                 docker {
                     image 'snyk/snyk:linux'
                     args '-e SNYK_TOKEN'
+                    command 'test --fail-on-issues=false'
                 }
             }
             steps {
                 echo 'Testing...'
-                sh 'test --fail-on-issues=false'
             }
         }
         stage('Deploy artifcats') {
