@@ -1,6 +1,9 @@
 pipeline {
     agent any
 
+    environment {
+        SNYK_TOKEN = credentials('SNYK_TOKEN')
+    }
     stages {
         stage('Build') {
             steps {
@@ -17,13 +20,15 @@ pipeline {
             }
         }
         stage('Snyk Scan') {
+            agent {
+                docker {
+                    image 'snyk/snyk:maven'
+                    args '-e SNYK_TOKEN'
+                }
+            }
             steps {
                 echo 'Testing...'
-                snykSecurity(
-                        snykInstallation: 'Snyk Scanner',
-                        snykTokenId: 'YKMSmalls-App',
-                        failOnIssues: false,
-                )
+                sh 'snyk test --fail-on-issues=false'
             }
         }
         stage('Deploy artifcats') {
